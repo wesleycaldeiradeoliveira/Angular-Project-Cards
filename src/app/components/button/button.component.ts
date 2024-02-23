@@ -1,20 +1,23 @@
-import { Component, EventEmitter, Input, Output, input } from '@angular/core';
-import { text } from 'stream/consumers';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+  styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent {
+  @Input({ required: true, alias: 'text' }) 
+  buttonText: string = '';
+  
+  @Input({ required: true, alias: 'style' }) 
+  buttonStyle: 'white' | 'purple' = 'white';
 
-@Input({ required: true, alias: 'text'}) buttonText: string = ''; 
+  @Input({ alias: 'disabled' }) 
+  isDisabled: boolean = false;
 
-@Input({ required: true, alias: 'style'}) buttonStyle: 'white' | 'purple' = 'white';
+  @Output('clicked') buttonClickedEmitt = new EventEmitter<void>();
 
-@Output('clicked') buttonClikedEmitt = new  EventEmitter<void>();
-
-onbuttonclicked(){
-  this.buttonClikedEmitt.emit();
-}
+  onButtonClicked() {
+    this.buttonClickedEmitt.emit();
+  }
 }
